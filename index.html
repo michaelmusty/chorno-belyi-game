@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>Orbit sorting</title>
+
+<style>
+.row {
+  display: flex;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+  border: 1px solid #999999;
+}
+
+.row > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 40px;
+  width: 80px;
+  height: 80px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+</style>
+
+<!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+<script>
+var orbits = [0, 1 ,2, 0, 2, 2, 1];
+var orbitColors = ['#bb4477', '#33cc55', '#9955bb'];
+
+function setOrbitDisplay() {
+  var show = document.getElementById('show-orbits').checked;
+  var i;
+  for (i = 0; i < orbits.length; i++) {
+    document.getElementById('box-' + i).style.backgroundColor = show ? orbitColors[orbits[i]] : '#cccccc';
+  }
+}
+</script>
+
+</head>
+
+<body>
+<input type="checkbox" id="show-orbits" onclick="setOrbitDisplay()">Show orbits</input>
+<div id="row-0" class="row"></div>
+<div id="row-1" class="row"></div>
+<div id="row-2" class="row"></div>
+
+<script>
+var i;
+
+// make row contents sortable
+for (i = 0; i < 3; i++) {
+  new Sortable(document.getElementById('row-' + i), {group: 'shared', animation: 150});
+}
+
+// create boxes
+row = document.getElementById('row-0');
+for (i = 0; i < orbits.length; i++) {
+  box = document.createElement('div');
+  box.id = 'box-' + i;
+  box.innerHTML = i;
+  row.appendChild(box);
+}
+setOrbitDisplay();
+</script>
+</body>
+</html>
